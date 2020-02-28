@@ -31,6 +31,9 @@ class Analysis(object):
 if __name__ =='__main__':
     an = Analysis()
     bigdatavin=[]
+    errlog=[]
+    alllog=[]
+    rowtup=()
     file=open("interface-rl.log", "r")  #打开配置文件
     hive_line = file.readline()
     hive_line=hive_line.strip('\n')
@@ -39,7 +42,7 @@ if __name__ =='__main__':
     mysql_line=mysql_line.strip('\n')
     mysql_con=re.split(',',mysql_line)
     file.close()
-    filevin=open("vin-np.log", "r")
+    filevin=open("vin-rl.log", "r")
     vin_line=filevin.readlines()
     for i in range(len(vin_line)):
         vin_line[i]=vin_line[i].strip('\n')
@@ -54,7 +57,10 @@ if __name__ =='__main__':
         datacount=cursor.fetchall()
         tlife=t2-t1
         print(tlife,datacount,carvin)
-        if datacount>40000000:
+        rowtup=(tlife,datacount,carvin)
+        alllog.append(rowtup)
+        datacou=datacount[0]
+        if int(datacou[0])>400000:
             bigdatavin.append(carvin)
             break
         t1=time.time()
@@ -92,6 +98,14 @@ if __name__ =='__main__':
         t2=time.time()
         tlife=t2-t1
         print(tlife,ins)
+        if ins>0:
+            rowtup=(tlife,ins,carvin)
+            alllog.append(rowtup)
+        else:
+            rowtup=(tlife,ins,carvin)
+            errlog.append(rowtup)
+            break
+
 
         conn.close()
 
@@ -164,6 +178,17 @@ if __name__ =='__main__':
         t2=time.time()
         tlife=t2-t1
         print(tlife)
+        rowtup=(tlife,)
+        alllog.append(rowtup)
+    filelog=open('seclog.log','a+')
+    filelog.writelines(alllog)
+    filelog.close()
+    filelog=open('biglog.log','a+')
+    filelog.writelines(bigdatavin)
+    filelog.close()
+    filelog = open('errlog.log', 'a+')
+    filelog.writelines(errlog)
+    filelog.close()
 
 
 
