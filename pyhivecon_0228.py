@@ -34,7 +34,7 @@ if __name__ =='__main__':
     errlog=[]
     #alllog=[]
     rowtup=()
-    file=open("interface-rl.log", "r")  #打开配置文件
+    file=open("interface-np.log", "r")  #打开配置文件
     hive_line = file.readline()
     hive_line=hive_line.strip('\n')
     hive_con=re.split(',',hive_line)
