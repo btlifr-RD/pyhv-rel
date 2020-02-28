@@ -100,7 +100,11 @@ if __name__ =='__main__':
                      break #continue
              if isnum ==1:
                  if an.is_time(rowList[0]) and (tstar <= datetime.datetime.strptime(rowList[0], '%Y-%m-%d %H:%M:%S')<= tend):
-                    if (0 <= float(rowList[1])<= 300) and (-50<= float(rowList[6])<= 150) and (-50 <= float(rowList[7]) <= 150) and (0 <= float(rowList[9]) <= 100) and (0 <= float(rowList[12]) <= 1000) and (0 <= float(rowList[15]) <= 10) and (-1 <= float(rowList[17]) <= 10):
+                    if (0 <= float(rowList[1]) <= 300) and (-50 <= float(rowList[6]) <= 150) \
+                             and (-50 <= float(rowList[7]) <= 150) and (0 < float(rowList[9]) <= 100) \
+                             and (0 < float(rowList[12]) <= 1000) and (0 < float(rowList[15]) < 10) \
+                             and (0 < float(rowList[17]) < 10) and (-300 <= float(rowList[2]) <= 300) \
+                             and (float(rowList[5]) > 0):
                         newRow=tuple(rowList)
                         newdate.append(newRow)
                         ins += 1
